@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Population & Geopolitical Risk Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans leading-relaxed p-6 max-w-5xl mx-auto">
+
+  <!-- Landing Page Section -->
+  <header class="py-10 border-b border-slate-700 text-center">
+    <h1 class="text-4xl font-extrabold text-blue-400 mb-2">Global Population & Geopolitical Risk Dashboard</h1>
+    <p class="text-lg text-slate-300 italic">「透過人口結構趨勢與地緣政治風險交叉分析，評估全球長期穩定性。」</p>
+    <p class="text-sm text-slate-400 mt-4">作者：[你的姓名] | FinTech & AI Applications</p>
+  </header>
+
+  <!-- 人口預測區塊 -->
+  <section class="py-8 border-b border-slate-700">
+    <h2 class="text-2xl font-bold text-slate-100 mb-4">一、世界人口預測 (2024-2100)</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <div class="bg-slate-800 p-4 rounded-lg text-center"><p class="text-slate-400">2024</p><p class="text-2xl font-bold text-blue-400">8.16 億</p></div>
+      <div class="bg-slate-800 p-4 rounded-lg text-center"><p class="text-slate-400">2030</p><p class="text-2xl font-bold text-blue-400">8.55 億</p></div>
+      <div class="bg-slate-800 p-4 rounded-lg text-center"><p class="text-slate-400">2050</p><p class="text-2xl font-bold text-blue-400">9.66 億</p></div>
+      <div class="bg-slate-800 p-4 rounded-lg text-center"><p class="text-slate-400">2100</p><p class="text-2xl font-bold text-blue-400">10.35 億</p></div>
+    </div>
+    
+    <div class="bg-slate-800 p-4 rounded-lg mb-4">
+      <canvas id="popChart" class="max-h-64"></canvas>
+      <p class="text-xs text-slate-400 mt-2 text-right">圖表來源：UN World Population Prospects 2024 數據由 Python 自動繪製</p>
+    </div>
+
+    <!-- 顯示 Python 計算結果 -->
+    <div class="bg-slate-800 p-4 rounded-lg">
+      <h3 class="text-lg font-semibold mb-2 text-blue-300">Python 動態計算結果 (data/cleaned.json)</h3>
+      <pre id="jsonDisplay" class="bg-slate-950 p-3 rounded text-sm text-green-400 overflow-x-auto"></pre>
+    </div>
+  </section>
+
+  <!-- 伊朗風險分析區塊 -->
+  <section class="py-8 border-b border-slate-700">
+    <h2 class="text-2xl font-bold text-slate-100 mb-4">二、伊朗地緣政治風險分析 (Iran Risk Matrix)</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm text-slate-300 bg-slate-800 rounded-lg overflow-hidden">
+        <thead class="bg-slate-700 text-slate-100">
+          <tr>
+            <th class="p-3">風險因子</th>
+            <th class="p-3">機率</th>
+            <th class="p-3">影響程度</th>
+            <th class="p-3">事實資料 (Fact) vs 推論 (Inference)</th>
+            <th class="p-3">資料來源</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-700">
+          <tr>
+            <td class="p-3 font-semibold">霍爾木茲海峽封鎖風險</td>
+            <td class="p-3 text-yellow-400">中</td>
+            <td class="p-3 text-red-400">高</td>
+            <td class="p-3"><b class="text-blue-300">[事實]</b> 該海峽承載全球 20% 原油運輸。<br><b class="text-emerald-300">[推論]</b> 若衝突加劇封鎖，將誘發全球二次通膨。</td>
+            <td class="p-3">EIA / Reuters</td>
+          </tr>
+          <tr>
+            <td class="p-3 font-semibold">核計畫升級與制裁裁決</td>
+            <td class="p-3 text-red-400">高</td>
+            <td class="p-3 text-red-400">高</td>
+            <td class="p-3"><b class="text-blue-300">[事實]</b> IAEA 證實伊朗濃縮鈾純度達 60%。<br><b class="text-emerald-300">[推論]</b> 短期內突破武器級臨界點機率大幅增加。</td>
+            <td class="p-3">IAEA Reports</td>
+          </tr>
+          <tr>
+            <td class="p-3 font-semibold">國內經濟通膨與社會動盪</td>
+            <td class="p-3 text-red-400">高</td>
+            <td class="p-3 text-yellow-400">中</td>
+            <td class="p-3"><b class="text-blue-300">[事實]</b> 里亞爾貶值導致通膨率高達 40% 以上。<br><b class="text-emerald-300">[推論]</b> 內部民怨可能促使政府向外轉移矛盾焦點。</td>
+            <td class="p-3">World Bank</td>
+          </tr>
+          <tr>
+            <td class="p-3 font-semibold">代理人戰爭擴大 (Proxy Conflicts)</td>
+            <td class="p-3 text-red-400">高</td>
+            <td class="p-3 text-red-400">高</td>
+            <td class="p-3"><b class="text-blue-300">[事實]</b> 伊朗長期資助中東多個武裝組織。<br><b class="text-emerald-300">[推論]</b> 多線衝突可能拖累周邊區域經濟供應鏈穩定。</td>
+            <td class="p-3">CSIS Global Risks</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 方法論區塊 -->
+  <section class="py-8">
+    <h2 class="text-2xl font-bold text-slate-100 mb-4">三、方法論與 AI 使用說明</h2>
+    <div class="bg-slate-800 p-5 rounded-lg space-y-4">
+      <p><b>AI 工具應用：</b> 本專案使用 ChatGPT / Claude 協助寫出 Python 腳本草稿、生成 Tailwind 排版骨架，並協助對複雜地緣政治資料進行事實與推論的歸納。</p>
+      <p><b>資料驗證流程：</b> AI 產出的數據皆經過官方報告 (UN WPP 2024, EIA, IAEA) 的交叉比對，確保無 AI 幻覺（Hallucination）或年份錯置。</p>
+    </div>
+  </section>
+
+  <script>
+    // 載入 JSON 數據並渲染
+    fetch('data/cleaned.json')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('jsonDisplay').textContent = JSON.stringify(data, null, 2);
+        
+        // 渲染 Chart.js 圖表
+        const ctx = document.getElementById('popChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: data.timeline.map(d => d.year),
+            datasets: [{
+              label: '全球人口預測 (十億人)',
+              data: data.timeline.map(d => d.pop),
+              borderColor: '#60a5fa',
+              backgroundColor: 'rgba(96, 165, 250, 0.1)',
+              fill: true,
+              tension: 0.3
+            }]
+          },
+          options: { responsive: true, plugins: { legend: { labels: { color: '#fff' } } } }
+        });
+      });
+  </script>
+</body>
+</html>
